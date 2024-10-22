@@ -67,7 +67,7 @@ const SIPCalculator = () => {
   return (
     <ScrollView style={{height: 200}}>
     <SafeAreaView style={styles.container}>
-      <Text style={styles.title}>SIP Calculator</Text>
+      {/* <Text style={styles.title}>SIP Calculator</Text> */}
 
       {/* Monthly Investment Input */}
       <View style={styles.inputGroup}>
@@ -121,7 +121,7 @@ const SIPCalculator = () => {
 
         <Slider
           style={styles.slider}
-          minimumValue={5}
+          minimumValue={1}
           maximumValue={60}
           step={1}
           value={timePeriod}
@@ -177,7 +177,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 30,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFDBFD',
   },
   title: {
     fontSize: 24,
