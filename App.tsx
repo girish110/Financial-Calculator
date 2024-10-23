@@ -4,6 +4,9 @@ import { Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
 import SIPCalculator from './components/Hambuger/SIPCalculator';
+import SWPCalculator from './components/Hambuger/SWPCalculator';
+import LumpsumCalculator from './components/Hambuger/LumpsumCalculator';
+import AboutApp from './components/Hambuger/AboutApp';
 //const screenWidth = Dimensions.get('window').width;
 
 
@@ -14,7 +17,7 @@ const CustomDrawerContent = (props) => {
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={styles.drawerContainer}>
       <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
-      <Text style={styles.drawerMenu}> X </Text>
+        <Text style={styles.drawerMenu}> X </Text>
       </TouchableOpacity>
       <DrawerItemList {...props} />
     </DrawerContentScrollView>
@@ -35,27 +38,27 @@ const HomeScreen = () => (
       <View>
         <Text style={styles.question}>What is a SWP Calculator?</Text>
         <Text style={styles.home}>
-          The Systematic Withdrawal Plan or SWP offers investors a regular income and returns money that is left in the scheme. 
-          You may withdraw a fixed or a variable amount on a pre-decided date every month, quarter, or year. You may customise cash flows to withdraw, either a fixed amount or the capital gains on the investment. 
-          For example, you have 8,000 units in a mutual fund scheme. You have specified a set of instructions to the mutual fund house where you seek to withdraw Rs 5,000 every month through the Systematic Withdrawal Plan. 
-          On January 01, 2020, the NAV of the scheme was Rs 10. You would get an equivalent number of mutual fund units = Rs 5,000/10 = 500 units. The mutual fund house would redeem 500 units and give you an amount of Rs 5,000. 
-          You still have 7,500 units left in the mutual fund scheme. Now on February 01, 2020, the NAV of the mutual fund scheme increased to Rs 15. The equivalent units of the mutual fund scheme are Rs 5,000/ Rs 15 = 333 units. 
+          The Systematic Withdrawal Plan or SWP offers investors a regular income and returns money that is left in the scheme.
+          You may withdraw a fixed or a variable amount on a pre-decided date every month, quarter, or year. You may customise cash flows to withdraw, either a fixed amount or the capital gains on the investment.
+          For example, you have 8,000 units in a mutual fund scheme. You have specified a set of instructions to the mutual fund house where you seek to withdraw Rs 5,000 every month through the Systematic Withdrawal Plan.
+          On January 01, 2020, the NAV of the scheme was Rs 10. You would get an equivalent number of mutual fund units = Rs 5,000/10 = 500 units. The mutual fund house would redeem 500 units and give you an amount of Rs 5,000.
+          You still have 7,500 units left in the mutual fund scheme. Now on February 01, 2020, the NAV of the mutual fund scheme increased to Rs 15. The equivalent units of the mutual fund scheme are Rs 5,000/ Rs 15 = 333 units.
           The mutual fund house would redeem 333 units and give you Rs 5,000 for the month of February. You are left with 7500 units – 333 units or 7167 units. You may continue the calculations in a similar manner for the following months.
         </Text>
       </View>
 
     </SafeAreaView>
   </ScrollView>
-); 
+);
 
 
 // Navigation setup
 export default function App() {
   return (
     <NavigationContainer>
-      <Drawer.Navigator 
-      initialRouteName="Your Finance"
-      drawerContent={(props) => <CustomDrawerContent {...props} />} >
+      <Drawer.Navigator
+        initialRouteName="Your Finance"
+        drawerContent={(props) => <CustomDrawerContent {...props} />} >
         {/* <Drawer.Screen name="" component={HomeScreen} /> */}
         <Drawer.Screen
           name="Home"
@@ -68,8 +71,8 @@ export default function App() {
               fontWeight: 'bold',
             },
             headerTitleAlign: 'center',
-            drawerLabel: ({focused}) => (
-              <Text style={{ fontSize: 18, color:focused? 'purple':"grey" , fontWeight: 'bold' }}>
+            drawerLabel: ({ focused }) => (
+              <Text style={{ fontSize: 18, color: focused ? 'purple' : "grey", fontWeight: 'bold' }}>
                 Home
               </Text>
             ),
@@ -86,12 +89,67 @@ export default function App() {
               fontWeight: 'bold',
             },
             headerTitleAlign: 'center',
-            drawerLabel: ({focused}) => (
-              <Text style={{ fontSize: 18, color:focused? 'purple':'grey' , fontWeight: 'bold' }}>
+            drawerLabel: ({ focused }) => (
+              <Text style={{ fontSize: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
                 SIP Calculator
               </Text>
             ),
           }} />
+
+        <Drawer.Screen
+          name="SWP Calculator"
+          component={SWPCalculator}
+          options={{
+            title: 'SWP Calculator',  // Customize the top header label
+            headerTitleStyle: {
+              fontSize: 20,
+              color: 'black',
+              fontWeight: 'bold',
+            },
+            headerTitleAlign: 'center',
+            drawerLabel: ({ focused }) => (
+              <Text style={{ fontSize: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
+                SWP Calculator
+              </Text>
+            ),
+          }} />
+
+        <Drawer.Screen
+          name="Lumpsum Calculator"
+          component={LumpsumCalculator}
+          options={{
+            title: 'Lumpsum Calculator',  // Customize the top header label
+            headerTitleStyle: {
+              fontSize: 20,
+              color: 'black',
+              fontWeight: 'bold',
+            },
+            headerTitleAlign: 'center',
+            drawerLabel: ({ focused }) => (
+              <Text style={{ fontSize: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
+                Lumpsum Calculator
+              </Text>
+            ),
+          }} />
+
+        <Drawer.Screen
+          name="About app"
+          component={AboutApp}
+          options={{
+            title: 'About app',  // Customize the top header label
+            headerTitleStyle: {
+              fontSize: 20,
+              color: 'black',
+              fontWeight: 'bold',
+            },
+            headerTitleAlign: 'center',
+            drawerLabel: ({ focused }) => (
+              <Text style={{ fontSize: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
+                About app
+              </Text>
+            ),
+          }} />
+
       </Drawer.Navigator>
     </NavigationContainer>
   );
@@ -157,5 +215,5 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
     color: 'black',
   },
-  
+
 });
