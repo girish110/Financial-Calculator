@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Text, View, Button, StyleSheet, TouchableOpacity, Linking, ScrollView } from 'react-native';
+import { SafeAreaView, Text, View, Button, StyleSheet, TouchableOpacity, Linking, ScrollView, Image } from 'react-native';
 import { Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
@@ -72,9 +72,22 @@ export default function App() {
             },
             headerTitleAlign: 'center',
             drawerLabel: ({ focused }) => (
-              <Text style={{ fontSize: 18, color: focused ? 'purple' : "grey", fontWeight: 'bold' }}>
-                Home
-              </Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View>
+                  {/* <Text style={{ fontSize: 22, fontWeight: 'bold', color: focused ? 'purple' : "grey" }}>
+                    ⌂
+                  </Text> */}
+                  <Image
+                    source={require('./assets/home_icon1.png')}  // Path to your PNG image
+                    style={[styles.iconImage, { tintColor: focused ? '#56399C' : 'grey' }]}  // Optional tint color
+                  />
+                </View>
+                <View>
+                  <Text style={{ fontSize: 20, marginLeft: 15, color: focused ? 'purple' : "grey", fontWeight: 'bold' }}>
+                    Home
+                  </Text>
+                </View>
+              </View>
             ),
           }}
         />
@@ -90,9 +103,22 @@ export default function App() {
             },
             headerTitleAlign: 'center',
             drawerLabel: ({ focused }) => (
-              <Text style={{ fontSize: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
-                SIP Calculator
-              </Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View>
+                  {/* <Text style={{ fontSize: 22, fontWeight: 'bold', color: focused ? 'purple' : "grey" }}>
+                    ⌂
+                  </Text> */}
+                  <Image
+                    source={require('./assets/SIP_icon2.png')}  // Path to your PNG image
+                    style={[styles.iconImageSIP, { tintColor: focused ? '#56399C' : 'grey' }]}  // Optional tint color
+                  />
+                </View>
+                <View>
+                  <Text style={{ fontSize: 20, marginLeft: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
+                    SIP Calculator
+                  </Text>
+                </View>
+              </View>
             ),
           }} />
 
@@ -108,9 +134,19 @@ export default function App() {
             },
             headerTitleAlign: 'center',
             drawerLabel: ({ focused }) => (
-              <Text style={{ fontSize: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View>
+                  <Image
+                    source={require('./assets/SWP_icon.png')}  // Path to your PNG image
+                    style={[styles.iconImageSWP, { tintColor: focused ? '#56399C' : 'grey' }]}  // Optional tint color
+                  />
+                </View>
+                <View>
+              <Text style={{ fontSize: 20, marginLeft: 18,color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
                 SWP Calculator
               </Text>
+              </View>
+              </View>
             ),
           }} />
 
@@ -126,9 +162,20 @@ export default function App() {
             },
             headerTitleAlign: 'center',
             drawerLabel: ({ focused }) => (
-              <Text style={{ fontSize: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
-                Lumpsum Calculator
-              </Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View>
+                  {/* <Text style={{ fontSize: 22, fontWeight: 'bold', color: focused ? 'purple' : "grey" }}>
+                    ⌂
+                  </Text> */}
+                  <Image
+                    source={require('./assets/Lumpsum_icon2.png')}  // Path to your PNG image
+                    style={[styles.iconImageLumpsum, { tintColor: focused ? '#56399C' : 'grey' }]}  // Optional tint color
+                  />
+                </View>
+                <Text style={{ fontSize: 20, marginLeft: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
+                  Lumpsum Calculator
+                </Text>
+              </View>
             ),
           }} />
 
@@ -144,9 +191,19 @@ export default function App() {
             },
             headerTitleAlign: 'center',
             drawerLabel: ({ focused }) => (
-              <Text style={{ fontSize: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
-                About app
-              </Text>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <View>
+                  <Image
+                    source={require('./assets/aboutapp_icon.png')}  // Path to your PNG image
+                    style={[styles.iconImageSIP, { tintColor: focused ? '#56399C' : 'grey' }]}  // Optional tint color
+                  />
+                </View>
+                <View>
+                  <Text style={{ fontSize: 20, marginLeft: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
+                    About app
+                  </Text>
+                </View>
+              </View>
             ),
           }} />
 
@@ -209,11 +266,46 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   drawerMenu: {
-    paddingLeft: 20,
+    paddingLeft: 15,
     fontWeight: 'bold',
-    fontSize: 22,
+    fontSize: 20,
     paddingBottom: 20,
-    color: 'black',
+    color: '#A8001A',
   },
-
+  drawer_Container: {
+    flexDirection: 'row',
+    // justifyContent: 'flex-start',
+    // alignContent: 'center',
+    // textAlign: 'auto'
+  },
+  homeIcon: {
+    // fontSize: 25,
+    width: 23,           // Adjust the width of the image
+    height: 23,
+    // alignItems: 'center',
+    // alignSelf: 'center',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  iconImage: {
+    width: 21,           // Adjust the width of the image
+    height: 21,          // Adjust the height of the image
+    // resizeMode: 'contain',  // Ensures the image fits within the container
+    marginRight: 10,     // Add space between the icon and text
+    fontWeight: 'bold',
+  },
+  iconImageSIP: {
+    fontWeight: 'bold',
+    width: 23,           // Adjust the width of the image
+    height: 23,
+  },
+  iconImageLumpsum: {
+    width: 21,           // Adjust the width of the image
+    height: 21,
+  },
+  iconImageSWP: {
+    fontWeight: 'bold',
+    width: 24,           // Adjust the width of the image
+    height: 24,
+  }
 });
