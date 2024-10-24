@@ -3,10 +3,10 @@ import { SafeAreaView, Text, View, Button, StyleSheet, TouchableOpacity, Linking
 import { Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItemList } from '@react-navigation/drawer';
-import SIPCalculator from './components/Hambuger/SIPCalculator';
-import SWPCalculator from './components/Hambuger/SWPCalculator';
-import LumpsumCalculator from './components/Hambuger/LumpsumCalculator';
-import AboutApp from './components/Hambuger/AboutApp';
+import SIPCalculator from './components/Hamburger/SIPCalculator';
+import SWPCalculator from './components/Hamburger/SWPCalculator';
+import LumpsumCalculator from './components/Hamburger/LumpsumCalculator';
+import AboutApp from './components/Hamburger/AboutApp';
 //const screenWidth = Dimensions.get('window').width;
 
 
@@ -64,7 +64,7 @@ export default function App() {
           name="Home"
           component={HomeScreen}
           options={{
-            title: 'Finance Overview',  // Customize the top header label
+            title: 'Your Finance',  // Customize the top header label
             headerTitleStyle: {
               fontSize: 20,
               color: 'black',
