@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 30,
-    backgroundColor: '#FFDBFD',
+    backgroundColor: '#FFE0FA',
   },
   inputGroup: {
     marginBottom: 20,

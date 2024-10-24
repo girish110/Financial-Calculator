@@ -1,14 +1,44 @@
-import React, { useState } from 'react';
-import { View, Text, SafeAreaView, StyleSheet, ScrollView, Dimensions, TouchableOpacity, Linking } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, SafeAreaView, StyleSheet, ScrollView, Dimensions, TouchableOpacity, Linking, Keyboard, BackHandler, TouchableWithoutFeedback } from 'react-native';
 import Slider from '@react-native-community/slider';
 import { PieChart } from 'react-native-chart-kit';
+import { TextInput } from 'react-native';
 
 const LumpsumCalculator = () => {
   const [totalInvestment, setTotalInvestment] = useState(50000); // Default value
   const [expectedReturn, setExpectedReturn] = useState(8); // Annual percentage
   const [timePeriod, setTimePeriod] = useState(5); // in years
+  const [investmentError, setInvestmentError] = useState('');
+  const inputRef = useRef(null); 
 
   const screenWidth = Dimensions.get('window').width;
+
+  const handleLumpsumInvestment = (value) => {
+    // Validate input and check if it’s less than 500
+    if (value === '') {
+      setTotalInvestment(0);
+      setInvestmentError(''); // Clear error on empty input
+      return;
+    }
+    const parsedValue = parseInt(value.replace(/[^0-9]/g, ''), 10); // Remove non-numeric characters
+    if (!isNaN(parsedValue)) {
+      if (parsedValue < 10000) {
+        setInvestmentError('Min. value allowed is ₹10000');
+        setTotalInvestment(parsedValue); // Allow input but show error
+      } else if (parsedValue >= 10000 && parsedValue <= 10000000) {
+        setInvestmentError(''); // Clear error if valid
+        setTotalInvestment(parsedValue);
+      } else {
+        setInvestmentError(''); // Reset error if out of bounds
+        setTotalInvestment(parsedValue > 10000000 ? 10000000 : parsedValue);
+      }
+    }
+  };
+
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();  // Close the keyboard
+    inputRef.current.blur();  // Remove focus from the TextInput
+  };
   // Lumpsum Calculation with Compounding Effect
   const calculateLumpsum = () => {
     const annualRate = expectedReturn / 100;
@@ -24,7 +54,7 @@ const LumpsumCalculator = () => {
     {
       name: 'Invested Amount',
       population: result.totalInvestment,
-      color: 'grey',
+      color: 'blue',
       legendFontColor: '#7F7F7F',
       legendFontSize: 12,
     },
@@ -40,18 +70,50 @@ const LumpsumCalculator = () => {
   const handleButton = () => {
     Linking.openURL('https://zerodha.com/').catch((err) => console.error('Failed to open URL:', err));
   };
+
+  useEffect(() => {
+    const handleBackPress = () => {
+      if (inputRef.current?.isFocused()) {  // Check if the TextInput is focused
+        inputRef.current.blur();  // Blur the TextInput to remove focus
+        return true;  // Prevent default back button behavior
+      }
+      return false;  // Let the back button work as expected otherwise
+    };
+
+    const backHandler = BackHandler.addEventListener('hardwareBackPress', handleBackPress);
+
+    return () => {
+      backHandler.remove();  // Clean up the listener on component unmount
+    };
+  }, []);
+  
   
   return (
     <ScrollView style={{ height: 200 }}>
       <SafeAreaView style={styles.container}>
+      <TouchableWithoutFeedback onPress={dismissKeyboard}>
         <View style={styles.inputGroup}>
           {/* Total Investment Slider */}
           <View style={styles.row}>
             <Text style={styles.input}>Total Investment</Text>
-            <View style={styles.space}>
-              <Text style={styles.inputAmount}>₹ {totalInvestment.toLocaleString('en-IN')}</Text>
+            <View style={styles.inputWrapper}>
+            <Text style={styles.currencySymbol}>₹</Text>
+              {/* <Text style={styles.inputAmount}>₹ {totalInvestment.toLocaleString('en-IN')}</Text> */}
+              <TextInput
+              ref={inputRef}
+              style={styles.inputAmount}
+              //value={`₹ ${totalInvestment}`}
+              value={totalInvestment.toString()} 
+              keyboardType="numeric"  // Only allows numeric input
+                onChangeText={handleLumpsumInvestment}
+                 maxLength={10}  // Limit input length (₹ and space)
+                onBlur={() => dismissKeyboard}
+              />
             </View>
           </View>
+          {investmentError !== '' && (
+              <Text style={styles.errorText}>{investmentError}</Text>
+            )}
           <Slider
             style={styles.slider}
             minimumValue={10000}
@@ -61,6 +123,7 @@ const LumpsumCalculator = () => {
             onValueChange={(value) => setTotalInvestment(value)}
           />
         </View>
+        </TouchableWithoutFeedback>
 
         {/* Expected Return Slider */}
         <View style={styles.inputGroup}>
@@ -144,7 +207,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 30,
-    backgroundColor: '#FFDBFD',
+    backgroundColor: '#FFE0FA',
   },
   inputGroup: {
     marginBottom: 20,
@@ -152,6 +215,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignItems: 'center'
   },
   input: {
     fontSize: 15,
@@ -212,6 +276,26 @@ const styles = StyleSheet.create({
     color: 'white', // text color (important for visibility on the purple button)
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  errorText: {
+    color: 'red',
+    marginTop: 0,
+    marginRight: 10,
+    fontSize: 12,
+    alignSelf: 'flex-end'
+  },
+  currencySymbol: {
+    fontSize: 18,  // Same size as input text
+    color: 'purple',  // Match the color
+    marginLeft: 10,  // Add some space between the symbol and input
+  },
+  inputWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#D4C4FF',  // Same background color as input
+    borderRadius: 10,
+    paddingHorizontal: 5,
+    paddingVertical: 3,
   },
 });
 

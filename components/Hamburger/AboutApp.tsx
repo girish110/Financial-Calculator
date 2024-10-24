@@ -3,7 +3,7 @@ import { View, Text, SafeAreaView, StyleSheet, ScrollView, Dimensions, Touchable
 
 export default function AboutApp() {
     return (
-
+        <SafeAreaView style={styles.container}>
         <View style={styles.about}>
             <Text style={styles.text}>
                 This is a financial calcualtor app, which helps calculate
@@ -15,6 +15,7 @@ export default function AboutApp() {
 
             </Text>
         </View>
+        </SafeAreaView>
 
     )
 }
@@ -23,12 +24,17 @@ const styles = StyleSheet.create({
 
     about: {
         // alignSelf: 'center',
-        padding: 30,
+        padding: 10,
     },
     text: {
         fontSize: 20,
         paddingTop: 20,
         margin: 'auto',
+    },
+    container: {
+        flex: 1,
+    padding: 30,
+    backgroundColor: '#DED0DC',
     }
 
 }
