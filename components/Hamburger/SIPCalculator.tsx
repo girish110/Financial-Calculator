@@ -11,22 +11,9 @@ const SIPCalculator = () => {
   const [expectedReturn, setExpectedReturn] = useState(5);
   const [timePeriod, setTimePeriod] = useState(1);
   const [investmentError, setInvestmentError] = useState('');
-  const inputRef = useRef(null); 
+  const inputRef = useRef(null);
 
 
-  // const handleMonthlyInvestment = (value) => {
-  //   // Validate if input is a number and within allowed range (1000-100000)
-  //   const parsedValue = parseInt(value.replace(/[^0-9]/g, ''), 10); // Remove non-numeric characters
-  //   if (!isNaN(parsedValue)) {
-  //     if (parsedValue >= 1000 && parsedValue <= 100000) {
-  //       setMonthlyInvestment(parsedValue);
-  //     } else if (parsedValue < 1000 && parsedValue >= 500  || parsedValue < 500)  {
-  //       setMonthlyInvestment(500);  // Minimum limit
-  //     } else {
-  //       setMonthlyInvestment(100000);  // Maximum limit
-  //     }
-  //   }
-  // };
 
   const handleMonthlyInvestment = (value) => {
     // Validate input and check if it’s less than 500
@@ -34,7 +21,7 @@ const SIPCalculator = () => {
       setMonthlyInvestment(0);
       setInvestmentError(''); // Clear error on empty input
       return;
-    }
+    }                                                                                       
     const parsedValue = parseInt(value.replace(/[^0-9]/g, ''), 10); // Remove non-numeric characters
     if (!isNaN(parsedValue)) {
       if (parsedValue < 500) {
@@ -56,17 +43,20 @@ const SIPCalculator = () => {
     inputRef.current.blur();  // Remove focus from the TextInput
   };
 
-  
+
   const calculateSIP = () => {
+    const minInvestment = 500;
+    const effectiveInvestment = monthlyInvestment < minInvestment ? minInvestment : monthlyInvestment;
+
     const monthlyRate = expectedReturn === 0 ? 0 : expectedReturn / 12 / 100;
     const months = timePeriod * 12;
 
     // Future value calculation (avoid dividing by 0)
     const futureValue = monthlyRate === 0
-      ? monthlyInvestment * months // No return scenario
-      : monthlyInvestment * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate);
+      ? effectiveInvestment * months // No return scenario
+      : effectiveInvestment * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate) * (1 + monthlyRate);
 
-    const totalInvested = monthlyInvestment * months;
+    const totalInvested = effectiveInvestment * months;
     const estimatedReturns = futureValue - totalInvested;
 
     return { totalInvested, estimatedReturns, futureValue };
@@ -111,46 +101,46 @@ const SIPCalculator = () => {
       backHandler.remove();  // Clean up the listener on component unmount
     };
   }, []);
-  
+
   return (
     <ScrollView style={{ height: 200 }}>
       <SafeAreaView style={styles.container}>
         {/* <Text style={styles.title}>SIP Calculator</Text> */}
         <TouchableWithoutFeedback onPress={dismissKeyboard}>
-        {/* Monthly Investment Input */}
-        <View style={styles.inputGroup}>
-          <View style={styles.row}>
-            <Text style={styles.input}>Monthly Investment </Text>
-            <View style={styles.inputWrapper}>
-            <Text style={styles.currencySymbol}>₹</Text>
-              {/* <Text style={styles.inputAmount}></Text> */}
-              <TextInput
-              ref={inputRef}
-                style={styles.inputAmount}
-                // value={`₹ ${monthlyInvestment}`}
-                value={monthlyInvestment.toString()}  
-                keyboardType="numeric"  // Only allows numeric input
-                onChangeText={handleMonthlyInvestment}
-                maxLength={8}  // Limit input length (₹ and space)
-                onBlur={() => dismissKeyboard}
-              />
+          {/* Monthly Investment Input */}
+          <View style={styles.inputGroup}>
+            <View style={styles.row}>
+              <Text style={styles.input}>Monthly Investment </Text>
+              <View style={styles.inputWrapper}>
+                <Text style={styles.currencySymbol}>₹</Text>
+                {/* <Text style={styles.inputAmount}></Text> */}
+                <TextInput
+                  ref={inputRef}
+                  style={styles.inputAmount}
+                  // value={`₹ ${monthlyInvestment}`}
+                  value={monthlyInvestment.toString()}
+                  keyboardType="numeric"  // Only allows numeric input
+                  onChangeText={handleMonthlyInvestment}
+                  maxLength={8}  // Limit input length (₹ and space)
+                  onBlur={() => dismissKeyboard}
+                />
+              </View>
             </View>
-          </View>
-          {investmentError !== '' && (
+            {investmentError !== '' && (
               <Text style={styles.errorText}>{investmentError}</Text>
             )}
-          <Slider
-            style={styles.slider}
-            minimumValue={1000}
-            maximumValue={500000}
-            step={1000}
-            value={monthlyInvestment}
-            onValueChange={(value) => setMonthlyInvestment(value)}
-          // minimumTrackTintColor="green"
-          // maximumTrackTintColor="grey"
-          // thumbTintColor="green"
-          />
-        </View>
+            <Slider
+              style={styles.slider}
+              minimumValue={1000}
+              maximumValue={500000}
+              step={1000}
+              value={monthlyInvestment}
+              onValueChange={(value) => setMonthlyInvestment(value)}
+            // minimumTrackTintColor="green"
+            // maximumTrackTintColor="grey"
+            // thumbTintColor="green"
+            />
+          </View>
         </TouchableWithoutFeedback>
 
         {/* Expected Return Rate Input */}

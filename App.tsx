@@ -17,7 +17,7 @@ const CustomDrawerContent = (props) => {
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={styles.drawerContainer}>
       <TouchableOpacity onPress={() => props.navigation.closeDrawer()}>
-        <Text style={styles.drawerMenu}> X </Text>
+        <Text style={styles.drawerClose}> X </Text>
       </TouchableOpacity>
       <DrawerItemList {...props} />
     </DrawerContentScrollView>
@@ -28,7 +28,7 @@ const HomeScreen = () => (
   <ScrollView style={{ flex: 2, height: 50, paddingBottom: 200 }}>
     <SafeAreaView style={styles.container}>
       <View>
-        <Text style={styles.question}>What is a SIP Calculator?</Text>
+        <Text style={styles.question}>➔   What is a SIP Calculator?</Text>
         <Text style={styles.home}>
           A SIP calculator is a simple tool that allows individuals to get an idea of the returns on their mutual fund investments made through SIP. SIP investments in mutual funds have become one of the most popular investment options for millennials lately.
           These mutual fund sip calculators are designed to give potential investors an estimate on their mutual fund investments. However, the actual returns offered by a mutual fund scheme varies depending on various factors. The SIP calculator does not provide clarification for the exit load and expense ratio (if any).
@@ -36,14 +36,23 @@ const HomeScreen = () => (
       </View>
 
       <View>
-        <Text style={styles.question}>What is a SWP Calculator?</Text>
+        <Text style={styles.question}>➔   What is a SWP Calculator?</Text>
         <Text style={styles.home}>
           The Systematic Withdrawal Plan or SWP offers investors a regular income and returns money that is left in the scheme.
           You may withdraw a fixed or a variable amount on a pre-decided date every month, quarter, or year. You may customise cash flows to withdraw, either a fixed amount or the capital gains on the investment.
           For example, you have 8,000 units in a mutual fund scheme. You have specified a set of instructions to the mutual fund house where you seek to withdraw Rs 5,000 every month through the Systematic Withdrawal Plan.
           On January 01, 2020, the NAV of the scheme was Rs 10. You would get an equivalent number of mutual fund units = Rs 5,000/10 = 500 units. The mutual fund house would redeem 500 units and give you an amount of Rs 5,000.
-          You still have 7,500 units left in the mutual fund scheme. Now on February 01, 2020, the NAV of the mutual fund scheme increased to Rs 15. The equivalent units of the mutual fund scheme are Rs 5,000/ Rs 15 = 333 units.
-          The mutual fund house would redeem 333 units and give you Rs 5,000 for the month of February. You are left with 7500 units – 333 units or 7167 units. You may continue the calculations in a similar manner for the following months.
+        </Text>
+      </View>
+
+      <View>
+        <Text style={styles.question}>➔   What is a Lumpsum Calculator?</Text>
+        <Text style={styles.home}>
+        A lumpsum investment is when the depositor invests a significant sum of money on a particular mutual fund scheme. 
+        SIP or Systematic Investment Plan, on the other hand, entails the investment of smaller amounts on a monthly basis.
+        Both these type of mutual fund investment strategies have their fair share of benefits. 
+        Lumpsum investments are particularly preferred by a majority of investors, as there are lesser variables involved and returns are generally on the higher side. 
+        To find out the estimated returns on your lumpsum mutual fund investment, you may use a mutual fund lumpsum calculator available online.
         </Text>
       </View>
 
@@ -250,22 +259,26 @@ const styles = StyleSheet.create({
   },
   home: {
     fontSize: 17,
-    alignContent: 'center',
-    alignSelf: 'center',
+    // alignContent: 'center',
+    // alignSelf: 'center',
     // padding: 20,
     paddingLeft: 30,
     paddingRight: 30,
+    textAlign: 'justify',          // Justifies text to align both left and right edges
+    paddingHorizontal: 30,  
   },
   question: {
     fontWeight: 'bold',
     fontSize: 20,
     padding: 30,
     color: 'purple',
+    paddingHorizontal: 30,
+    paddingVertical: 20,
   },
   drawerContainer: {
     paddingTop: 10,
   },
-  drawerMenu: {
+  drawerClose: {
     paddingLeft: 15,
     fontWeight: 'bold',
     fontSize: 20,

@@ -29,7 +29,7 @@ const LumpsumCalculator = () => {
         setInvestmentError(''); // Clear error if valid
         setTotalInvestment(parsedValue);
       } else {
-        setInvestmentError(''); // Reset error if out of bounds
+        setInvestmentError('Min. value allowed is ₹10000'); // Reset error if out of bounds
         setTotalInvestment(parsedValue > 10000000 ? 10000000 : parsedValue);
       }
     }
@@ -41,11 +41,14 @@ const LumpsumCalculator = () => {
   };
   // Lumpsum Calculation with Compounding Effect
   const calculateLumpsum = () => {
+    const minInvestment = 10000;
+    const investment = totalInvestment < minInvestment ? minInvestment : totalInvestment;
+  
     const annualRate = expectedReturn / 100;
-    const futureValue = totalInvestment * Math.pow(1 + annualRate, timePeriod);
-    const estimatedReturns = futureValue - totalInvestment;
+    const futureValue = investment * Math.pow(1 + annualRate, timePeriod);
+    const estimatedReturns = futureValue - investment;
 
-    return { futureValue, estimatedReturns, totalInvestment };
+    return { futureValue, estimatedReturns, totalInvestment:investment };
   };
 
   const result = calculateLumpsum();
