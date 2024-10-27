@@ -7,11 +7,22 @@ import SIPCalculator from './components/Hamburger/SIPCalculator';
 import SWPCalculator from './components/Hamburger/SWPCalculator';
 import LumpsumCalculator from './components/Hamburger/LumpsumCalculator';
 import AboutApp from './components/Hamburger/AboutApp';
+import FAQs from './components/Home/FAQs';
+import { createStackNavigator } from '@react-navigation/stack';
 //const screenWidth = Dimensions.get('window').width;
 
 
 // Create Drawer Navigator
 const Drawer = createDrawerNavigator();
+const Stack = createStackNavigator();
+
+// const handleButton = () => {
+//   Linking.openURL('https://zerodha.com/').catch((err) => console.error('Failed to open URL:', err));
+// };
+
+const openLink = (url) => {
+  Linking.openURL(url).catch((err) => console.error('Failed to open URL:', err));
+};
 
 const CustomDrawerContent = (props) => {
   return (
@@ -23,39 +34,81 @@ const CustomDrawerContent = (props) => {
     </DrawerContentScrollView>
   );
 };
-const HomeScreen = () => (
 
-  <ScrollView style={{ flex: 2, height: 50, paddingBottom: 200 }}>
+const MainStackNavigator = () => {
+
+  return(
+  <Stack.Navigator>
+    <Stack.Screen
+      name="FAQs"
+      component={FAQs}
+      options={{
+        title: 'FAQs',
+        headerTitleStyle: {
+          fontSize: 20,
+          color: 'black',
+          fontWeight: 'bold',
+        },
+        headerTitleAlign: 'center',
+      }}
+    />
+  </Stack.Navigator>
+  );
+};
+
+const HomeScreen = ({ navigation }) => (
+  <ScrollView style={styles.scrollContainer}>
     <SafeAreaView style={styles.container}>
-      <View>
-        <Text style={styles.question}>➔   What is a SIP Calculator?</Text>
-        <Text style={styles.home}>
-          A SIP calculator is a simple tool that allows individuals to get an idea of the returns on their mutual fund investments made through SIP. SIP investments in mutual funds have become one of the most popular investment options for millennials lately.
-          These mutual fund sip calculators are designed to give potential investors an estimate on their mutual fund investments. However, the actual returns offered by a mutual fund scheme varies depending on various factors. The SIP calculator does not provide clarification for the exit load and expense ratio (if any).
-          This calculator will calculate the wealth gain and expected returns for your monthly SIP investment. Indeed, you get a rough estimate on the maturity amount for any of your monthly SIP, based on a projected annual return rate.</Text>
-      </View>
+      {/* <Text style={styles.headerTitle}>Calculators</Text> */}
 
-      <View>
-        <Text style={styles.question}>➔   What is a SWP Calculator?</Text>
-        <Text style={styles.home}>
-          The Systematic Withdrawal Plan or SWP offers investors a regular income and returns money that is left in the scheme.
-          You may withdraw a fixed or a variable amount on a pre-decided date every month, quarter, or year. You may customise cash flows to withdraw, either a fixed amount or the capital gains on the investment.
-          For example, you have 8,000 units in a mutual fund scheme. You have specified a set of instructions to the mutual fund house where you seek to withdraw Rs 5,000 every month through the Systematic Withdrawal Plan.
-          On January 01, 2020, the NAV of the scheme was Rs 10. You would get an equivalent number of mutual fund units = Rs 5,000/10 = 500 units. The mutual fund house would redeem 500 units and give you an amount of Rs 5,000.
-        </Text>
-      </View>
+      <TouchableOpacity style={styles.SIPCard} onPress={() => navigation.navigate('SIP Calculator')}>
+        <Image source={require('./assets/SIP_icon2.png')} style={styles.cardIcon} />
+        <View style={styles.cardTextContainer}>
+          <Text style={styles.cardTitle}>SIP Calculator</Text>
+          <Text style={styles.cardDescription}>Calculate estimated returns on SIP investments.</Text>
+        </View>
+      </TouchableOpacity>
 
-      <View>
-        <Text style={styles.question}>➔   What is a Lumpsum Calculator?</Text>
-        <Text style={styles.home}>
-        A lumpsum investment is when the depositor invests a significant sum of money on a particular mutual fund scheme. 
-        SIP or Systematic Investment Plan, on the other hand, entails the investment of smaller amounts on a monthly basis.
-        Both these type of mutual fund investment strategies have their fair share of benefits. 
-        Lumpsum investments are particularly preferred by a majority of investors, as there are lesser variables involved and returns are generally on the higher side. 
-        To find out the estimated returns on your lumpsum mutual fund investment, you may use a mutual fund lumpsum calculator available online.
-        </Text>
-      </View>
+      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('SWP Calculator')}>
+        <Image source={require('./assets/SWP_icon.png')} style={styles.cardIcon} />
+        <View style={styles.cardTextContainer}>
+          <Text style={styles.cardTitle}>SWP Calculator</Text>
+          <Text style={styles.cardDescription}>Get insights on systematic withdrawals for steady income.</Text>
+        </View>
+      </TouchableOpacity>
 
+      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('Lumpsum Calculator')}>
+        <Image source={require('./assets/Lumpsum_icon2.png')} style={styles.cardIcon} />
+        <View style={styles.cardTextContainer}>
+          <Text style={styles.cardTitle}>Lumpsum Calculator</Text>
+          <Text style={styles.cardDescription}>Calculate estimated returns on one-time lumpsum investments</Text>
+        </View>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.card} onPress={() => navigation.navigate('FAQs')}>
+        <Image source={require('./assets/question.png')} style={styles.cardIcon} />
+        <View style={styles.cardTextContainer}>
+          <Text style={styles.cardTitle}>FAQs</Text>
+          <Text style={styles.cardDescription}>The most commonly asked questions on how to use a financial calculator</Text>
+        </View>
+      </TouchableOpacity>
+
+      {/* <TouchableOpacity style={styles.button} onPress={handleButton}>
+          <Text style={styles.buttonText}>Invest Now</Text>
+        </TouchableOpacity> */}
+      <Text style={{ alignSelf: 'center', marginTop: 5 }}>Connect with me</Text>
+      <View style={styles.footer}>
+
+        <TouchableOpacity onPress={() => openLink('https://github.com/girish110')}>
+          <Image source={require('./assets/github_icon.png')} style={styles.footerIconGithub} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => openLink('https://www.linkedin.com/in/girish-sharma-4b98b2214/')}>
+          <Image source={require('./assets/linkedin_icon.png')} style={styles.footerIconLinkedin} />
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => openLink('https://www.instagram.com/girisharma10/')}>
+          <Image source={require('./assets/instagram_icon.png')} style={styles.footerIconInstagram} />
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   </ScrollView>
 );
@@ -64,169 +117,223 @@ const HomeScreen = () => (
 // Navigation setup
 export default function App() {
   return (
-    <NavigationContainer>
-      <Drawer.Navigator
-        initialRouteName="Your Finance"
-        drawerContent={(props) => <CustomDrawerContent {...props} />} >
-        {/* <Drawer.Screen name="" component={HomeScreen} /> */}
-        <Drawer.Screen
-          name="Home"
-          component={HomeScreen}
-          options={({navigation}) => ({
-            title: '',
-            headerBackground: ()=>(  // Customize the top header label
-            <Image
-                source={require('./assets/header_fin.png')} // Replace with your image path
+    <>
+      <NavigationContainer>
+
+        <Drawer.Navigator
+          initialRouteName="Your Finance"
+          drawerContent={(props) => <CustomDrawerContent {...props} />} >
+          {/* <Drawer.Screen name="" component={HomeScreen} /> */}
+          
+          <Drawer.Screen
+            name="Home"
+            component={HomeScreen}
+            options={({ navigation }) => ({
+              title: '',
+              headerBackground: () => (  // Customize the top header label
+                <Image
+                  source={require('./assets/header_fin.png')} // Replace with your image path
+                  style={styles.headerImage}
+                />
+              ),
+              headerLeft: (Navigation) => (
+                <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                  <Text style={styles.drawerIcon}>☰</Text>
+                </TouchableOpacity>
+              ),
+              headerTitleAlign: 'center',
+              drawerLabel: ({ focused }) => (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View>
+                    <Image
+                      source={require('./assets/home_icon1.png')} // Replace with your home icon path
+                      style={[styles.iconImage, { tintColor: focused ? '#56399C' : 'grey' }]}
+                    />
+                  </View>
+                  <Text style={{ fontSize: 20, marginLeft: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
+                    Home
+                  </Text>
+                </View>
+              ),
+            })}
+          />
+          <Drawer.Screen
+            name="SIP Calculator"
+            component={SIPCalculator}
+            options={{
+              title: 'SIP Calculator',  // Customize the top header label
+              headerTitleStyle: {
+                fontSize: 20,
+                color: 'black',
+                fontWeight: 'bold',
+              },
+              headerBackground: ()=> (
+                <Image
+                source={require('./assets/gradient.png')} // Replace with your image path
+                  style={styles.headerImage}
+                />
+              ),
+              headerTitleAlign: 'center',
+              drawerLabel: ({ focused }) => (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View>
+                    {/* <Text style={{ fontSize: 22, fontWeight: 'bold', color: focused ? 'purple' : "grey" }}>
+                    ⌂
+                  </Text> */}
+                    <Image
+                      source={require('./assets/SIP_icon2.png')}  // Path to your PNG image
+                      style={[styles.iconImageSIP, { tintColor: focused ? '#56399C' : 'grey' }]}  // Optional tint color
+                    />
+                  </View>
+                  <View>
+                    <Text style={{ fontSize: 20, marginLeft: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
+                      SIP Calculator
+                    </Text>
+                  </View>
+                </View>
+              ),
+            }} />
+
+          <Drawer.Screen
+            name="SWP Calculator"
+            component={SWPCalculator}
+            options={{
+              title: 'SWP Calculator',  // Customize the top header label
+              headerTitleStyle: {
+                fontSize: 20,
+                color: 'black',
+                fontWeight: 'bold',
+              },
+              headerBackground: ()=> (
+                <Image
+                source={require('./assets/gradient.png')} // Replace with your image path
+                  style={styles.headerImage}
+                />
+              ),
+              headerTitleAlign: 'center',
+              drawerLabel: ({ focused }) => (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View>
+                    <Image
+                      source={require('./assets/SWP_icon.png')}  // Path to your PNG image
+                      style={[styles.iconImageSWP, { tintColor: focused ? '#56399C' : 'grey' }]}  // Optional tint color
+                    />
+                  </View>
+                  <View>
+                    <Text style={{ fontSize: 20, marginLeft: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
+                      SWP Calculator
+                    </Text>
+                  </View>
+                </View>
+              ),
+            }} />
+
+          <Drawer.Screen
+            name="Lumpsum Calculator"
+            component={LumpsumCalculator}
+            options={{
+              title: 'Lumpsum Calculator',  // Customize the top header label
+              headerTitleStyle: {
+                fontSize: 20,
+                color: 'black',
+                fontWeight: 'bold',
+              },
+              headerBackground: ()=> (
+                <Image
+                source={require('./assets/gradient.png')} // Replace with your image path
+                  style={styles.headerImage}
+                />
+              ),
+              headerTitleAlign: 'center',
+              drawerLabel: ({ focused }) => (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View>
+                    {/* <Text style={{ fontSize: 22, fontWeight: 'bold', color: focused ? 'purple' : "grey" }}>
+                    ⌂
+                  </Text> */}
+                    <Image
+                      source={require('./assets/Lumpsum_icon2.png')}  // Path to your PNG image
+                      style={[styles.iconImageLumpsum, { tintColor: focused ? '#56399C' : 'grey' }]}  // Optional tint color
+                    />
+                  </View>
+                  <Text style={{ fontSize: 20, marginLeft: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
+                    Lumpsum Calculator
+                  </Text>
+                </View>
+              ),
+            }} />
+
+          <Drawer.Screen
+            name="About app"
+            component={AboutApp}
+            options={{
+              title: 'Info',  // Customize the top header label
+              headerTitleStyle: {
+                fontSize: 20,
+                color: 'black',
+                fontWeight: 'bold',
+              },
+              headerBackground: ()=> (
+                <Image
+                source={require('./assets/gradient.png')} // Replace with your image path
+                  style={styles.headerImage}
+                />
+              ),
+              headerTitleAlign: 'center',
+              drawerLabel: ({ focused }) => (
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View>
+                    <Image
+                      source={require('./assets/aboutapp_icon.png')}  // Path to your PNG image
+                      style={[styles.iconImageSIP, { tintColor: focused ? '#56399C' : 'grey' }]}  // Optional tint color
+                    />
+                  </View>
+                  <View>
+                    <Text style={{ fontSize: 20, marginLeft: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
+                      Info
+                    </Text>
+                  </View>
+                </View>
+              ),
+            }} />
+
+          <Drawer.Screen
+          name="FAQs"
+          component={FAQs}
+          options={{
+            // title: 'FAQs',  // Customize the top header label
+            headerTitleStyle: {
+              fontSize: 20,
+              color: 'black',
+              fontWeight: 'bold',
+            },
+            headerBackground: ()=> (
+              <Image
+              source={require('./assets/gradient.png')} // Replace with your image path
                 style={styles.headerImage}
               />
-          ),
-            headerLeft: (Navigation) => (
-              <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                <Text style={styles.drawerIcon}>Ξ </Text>
-              </TouchableOpacity>
             ),
             headerTitleAlign: 'center',
-            drawerLabel: ({ focused }) => (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View>
-                  <Image
-                    source={require('./assets/home_icon1.png')} // Replace with your home icon path
-                    style={[styles.iconImage, { tintColor: focused ? '#56399C' : 'grey' }]}
-                  />
-                </View>
-                <Text style={{ fontSize: 20, marginLeft: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
-                  Home
-                </Text>
-              </View>
-            ),
-          })}
-        />
-        <Drawer.Screen
-          name="SIP Calculator"
-          component={SIPCalculator}
-          options={{
-            title: 'SIP Calculator',  // Customize the top header label
-            headerTitleStyle: {
-              fontSize: 20,
-              color: 'black',
-              fontWeight: 'bold',
-            },
-            headerTitleAlign: 'center',
-            drawerLabel: ({ focused }) => (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View>
-                  {/* <Text style={{ fontSize: 22, fontWeight: 'bold', color: focused ? 'purple' : "grey" }}>
-                    ⌂
-                  </Text> */}
-                  <Image
-                    source={require('./assets/SIP_icon2.png')}  // Path to your PNG image
-                    style={[styles.iconImageSIP, { tintColor: focused ? '#56399C' : 'grey' }]}  // Optional tint color
-                  />
-                </View>
-                <View>
-                  <Text style={{ fontSize: 20, marginLeft: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
-                    SIP Calculator
-                  </Text>
-                </View>
-              </View>
-            ),
+            drawerLabel: () => null // this is made null, to hide it from the hamburger list
           }} />
 
-        <Drawer.Screen
-          name="SWP Calculator"
-          component={SWPCalculator}
-          options={{
-            title: 'SWP Calculator',  // Customize the top header label
-            headerTitleStyle: {
-              fontSize: 20,
-              color: 'black',
-              fontWeight: 'bold',
-            },
-            headerTitleAlign: 'center',
-            drawerLabel: ({ focused }) => (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View>
-                  <Image
-                    source={require('./assets/SWP_icon.png')}  // Path to your PNG image
-                    style={[styles.iconImageSWP, { tintColor: focused ? '#56399C' : 'grey' }]}  // Optional tint color
-                  />
-                </View>
-                <View>
-              <Text style={{ fontSize: 20, marginLeft: 18,color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
-                SWP Calculator
-              </Text>
-              </View>
-              </View>
-            ),
-          }} />
+        </Drawer.Navigator>
+        {/* <MainStackNavigator/> */}
+      </NavigationContainer>
 
-        <Drawer.Screen
-          name="Lumpsum Calculator"
-          component={LumpsumCalculator}
-          options={{
-            title: 'Lumpsum Calculator',  // Customize the top header label
-            headerTitleStyle: {
-              fontSize: 20,
-              color: 'black',
-              fontWeight: 'bold',
-            },
-            headerTitleAlign: 'center',
-            drawerLabel: ({ focused }) => (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View>
-                  {/* <Text style={{ fontSize: 22, fontWeight: 'bold', color: focused ? 'purple' : "grey" }}>
-                    ⌂
-                  </Text> */}
-                  <Image
-                    source={require('./assets/Lumpsum_icon2.png')}  // Path to your PNG image
-                    style={[styles.iconImageLumpsum, { tintColor: focused ? '#56399C' : 'grey' }]}  // Optional tint color
-                  />
-                </View>
-                <Text style={{ fontSize: 20, marginLeft: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
-                  Lumpsum Calculator
-                </Text>
-              </View>
-            ),
-          }} />
 
-        <Drawer.Screen
-          name="About app"
-          component={AboutApp}
-          options={{
-            title: 'About app',  // Customize the top header label
-            headerTitleStyle: {
-              fontSize: 20,
-              color: 'black',
-              fontWeight: 'bold',
-            },
-            headerTitleAlign: 'center',
-            drawerLabel: ({ focused }) => (
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View>
-                  <Image
-                    source={require('./assets/aboutapp_icon.png')}  // Path to your PNG image
-                    style={[styles.iconImageSIP, { tintColor: focused ? '#56399C' : 'grey' }]}  // Optional tint color
-                  />
-                </View>
-                <View>
-                  <Text style={{ fontSize: 20, marginLeft: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
-                    Info
-                  </Text>
-                </View>
-              </View>
-            ),
-          }} />
 
-      </Drawer.Navigator>
-    </NavigationContainer>
+
+    </>
   );
+
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#FFE0FA',
-  },
+  // container: {
+  //   flex: 1,
+  //   backgroundColor: '#FFE0FA',
+  // },
   header: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -250,8 +357,12 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 20,
     backgroundColor: 'purple',
-    padding: 15,
+    padding: 17,
+    marginLeft: 40,
+    marginRight: 40,
     alignItems: 'center',
+    overflow: 'hidden',
+    marginBottom: 20,
   },
   buttonText: {
     color: 'white',
@@ -266,7 +377,7 @@ const styles = StyleSheet.create({
     paddingLeft: 30,
     paddingRight: 30,
     textAlign: 'justify',          // Justifies text to align both left and right edges
-    paddingHorizontal: 30,  
+    paddingHorizontal: 30,
   },
   question: {
     fontWeight: 'bold',
@@ -333,4 +444,103 @@ const styles = StyleSheet.create({
     marginLeft: 12,
     fontWeight: 'bold'
   },
+
+
+
+
+
+
+  scrollContainer: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#FFE0FA',
+  },
+  headerTitle: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: 'purple',
+    marginTop: 15,
+    marginBottom: 30,
+    textAlign: 'center',
+  },
+  card: {
+    flexDirection: 'row',
+    backgroundColor: '#F0E99D',
+    borderRadius: 12,
+    padding: 20,
+    marginBottom: 25,
+    alignItems: 'center',
+    elevation: 5, // Adds a shadow effect for Android
+    shadowColor: '#000', // Adds a shadow effect for iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    // marginTop: 20,
+  },
+  SIPCard: {
+    flexDirection: 'row',
+    backgroundColor: '#F0E99D',
+    borderRadius: 12,
+    padding: 20,
+    marginBottom: 25,
+    alignItems: 'center',
+    elevation: 5, // Adds a shadow effect for Android
+    shadowColor: '#000', // Adds a shadow effect for iOS
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 3,
+    marginTop: 20,
+
+  },
+  cardIcon: {
+    width: 40,
+    height: 40,
+    marginRight: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    // color: 'purple', // using color attribute does not change colour of image icon, tintcolor should be used.
+    tintColor: '#56399C',
+  },
+  cardTextContainer: {
+    flex: 1,
+    marginBottom: 0,
+  },
+  cardTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'purple',
+  },
+  cardDescription: {
+    fontSize: 14,
+    color: 'grey',
+    marginTop: 10,
+  },
+  footerIconGithub: {
+    width: 30,
+    height: 30,
+    marginHorizontal: 10,
+    tintColor: 'maroon', // Use tintColor to color the icons
+  },
+  footerIconLinkedin: {
+    width: 30,
+    height: 30,
+    marginHorizontal: 10,
+    tintColor: 'blue', // Use tintColor to color the icons
+  },
+  footerIconInstagram: {
+    width: 33,
+    height: 33,
+    marginHorizontal: 10,
+    // tintColor: '#56399C', // Use tintColor to color the icons
+  },
+  footer: {
+    marginTop: 20,
+    marginBottom: 30,
+    justifyContent: 'space-evenly',
+    alignItems: 'center',
+    flexDirection: 'row',
+  }
 });

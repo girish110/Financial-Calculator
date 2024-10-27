@@ -297,6 +297,8 @@ const styles = StyleSheet.create({
   button: {
     marginTop: 20,
     borderRadius: 20,
+    marginLeft: 40,
+    marginRight: 40,
     backgroundColor: 'purple', // background color of the button
     padding: 15, // padding to add space inside the button
     alignItems: 'center', // to center the text horizontally
