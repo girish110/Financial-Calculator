@@ -72,33 +72,34 @@ export default function App() {
         <Drawer.Screen
           name="Home"
           component={HomeScreen}
-          options={{
-            title: 'Your Finance',  // Customize the top header label
-            headerTitleStyle: {
-              fontSize: 20,
-              color: 'black',
-              fontWeight: 'bold',
-            },
+          options={({navigation}) => ({
+            title: '',
+            headerBackground: ()=>(  // Customize the top header label
+            <Image
+                source={require('./assets/header_fin.png')} // Replace with your image path
+                style={styles.headerImage}
+              />
+          ),
+            headerLeft: (Navigation) => (
+              <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                <Text style={styles.drawerIcon}>Ξ </Text>
+              </TouchableOpacity>
+            ),
             headerTitleAlign: 'center',
             drawerLabel: ({ focused }) => (
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View>
-                  {/* <Text style={{ fontSize: 22, fontWeight: 'bold', color: focused ? 'purple' : "grey" }}>
-                    ⌂
-                  </Text> */}
                   <Image
-                    source={require('./assets/home_icon1.png')}  // Path to your PNG image
-                    style={[styles.iconImage, { tintColor: focused ? '#56399C' : 'grey' }]}  // Optional tint color
+                    source={require('./assets/home_icon1.png')} // Replace with your home icon path
+                    style={[styles.iconImage, { tintColor: focused ? '#56399C' : 'grey' }]}
                   />
                 </View>
-                <View>
-                  <Text style={{ fontSize: 20, marginLeft: 15, color: focused ? 'purple' : "grey", fontWeight: 'bold' }}>
-                    Home
-                  </Text>
-                </View>
+                <Text style={{ fontSize: 20, marginLeft: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
+                  Home
+                </Text>
               </View>
             ),
-          }}
+          })}
         />
         <Drawer.Screen
           name="SIP Calculator"
@@ -209,7 +210,7 @@ export default function App() {
                 </View>
                 <View>
                   <Text style={{ fontSize: 20, marginLeft: 18, color: focused ? 'purple' : 'grey', fontWeight: 'bold' }}>
-                    About app
+                    Info
                   </Text>
                 </View>
               </View>
@@ -320,5 +321,16 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     width: 24,           // Adjust the width of the image
     height: 24,
-  }
+  },
+  headerImage: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'cover',
+
+  },
+  drawerIcon: {
+    fontSize: 25,
+    marginLeft: 12,
+    fontWeight: 'bold'
+  },
 });
